@@ -129,7 +129,7 @@ def main() -> None:
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Replace existing images/, labels/, metadata.csv, and stale bbox metadata.",
+        help="Replace existing images/, labels/, metadata.csv.",
     )
     parser.add_argument(
         "--copy",
@@ -143,7 +143,6 @@ def main() -> None:
     images_dir = destination_root / "images"
     labels_dir = destination_root / "labels"
     metadata_path = destination_root / "metadata.csv"
-    stale_bbox_metadata = destination_root / "metadata_with_bboxes.csv"
 
     rows = collect_source_rows(synth_root)
     counts = pd.DataFrame(rows).groupby(["altitude", "category"]).size()
@@ -154,7 +153,7 @@ def main() -> None:
 
     existing = [
         p
-        for p in (images_dir, labels_dir, metadata_path, stale_bbox_metadata)
+        for p in (images_dir, labels_dir, metadata_path)
         if p.exists()
     ]
     if existing and not args.force:
@@ -171,8 +170,6 @@ def main() -> None:
             shutil.rmtree(labels_dir)
         if metadata_path.exists():
             metadata_path.unlink()
-        if stale_bbox_metadata.exists():
-            stale_bbox_metadata.unlink()
 
     destination_root.mkdir(parents=True, exist_ok=True)
     images_dir.mkdir(parents=True, exist_ok=False)
