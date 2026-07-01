@@ -12,7 +12,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=Path, default=ROOT / "dataset" / "yolo.yaml")
     parser.add_argument("--model", default="yolo11s.pt")
-    parser.add_argument("--out", type=Path, default=ROOT / "runs" / "yolo_real")
+    parser.add_argument("--out", type=Path, default=ROOT / "runs" / "yolo")
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--batch", type=int, default=16)
     parser.add_argument("--imgsz", type=int, default=640)
